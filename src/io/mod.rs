@@ -12,19 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[macro_use]
-extern crate log;
-
-#[macro_use]
-extern crate serde;
-
-#[macro_use]
-extern crate async_trait;
-
-pub mod cli;
-pub mod convert;
-mod http;
-mod io;
-pub mod operations;
-
-const API_ROOT_URL: &str = "https://api.telegram.org/bot";
+mod fidc;
