@@ -26,6 +26,8 @@ enum DbConnection {
 #[async_trait]
 /// A trait for file id-hash caching.
 trait FileCache {
+    /// Gets the URL of database.
+    async fn get_url(&self) -> Result<String, OperationError>;
     /// Initializes the database. It must be used before everything else.
     async fn initialize(&self) -> Result<(), OperationError>;
     /// Creates or updates current hash and file id.
