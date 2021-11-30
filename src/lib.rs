@@ -24,7 +24,6 @@ extern crate async_trait;
 pub mod cli;
 pub mod convert;
 mod http;
-mod io;
 pub mod operations;
 mod path;
 
