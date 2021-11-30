@@ -14,13 +14,13 @@
 
 //! A module for file ID caching.
 
-use sqlx::SqliteConnection;
+use sqlx::SqlitePool;
 
 use crate::operations::OperationError;
 
 /// Types of connections for file ID caching.
 enum DbConnection {
-    Sqlite(SqliteConnection),
+    Sqlite(SqlitePool),
 }
 
 #[async_trait]
