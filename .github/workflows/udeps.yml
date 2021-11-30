@@ -32,7 +32,7 @@ jobs:
           TELEGRAM_RECEIVER_ABSENT: ${{ secrets.SECRET_TELEGRAM_RECEIVER_ABSENT }}
         with:
           command: install
-          args: udeps
+          args: cargo-udeps --locked
       - uses: actions-rs/cargo@v1
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.SECRET_TELEGRAM_BOT_TOKEN }}
