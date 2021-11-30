@@ -1,6 +1,7 @@
 use std::path;
 
 use directories::ProjectDirs;
+use tokio::fs;
 
 use crate::operations::{CommonExitCodes, OperationError};
 
@@ -32,7 +33,7 @@ async fn get_project_dirs() -> Result<ProjectDirs, OperationError> {
     }
 }
 
-async fn get_cache_dir() -> Result<path::PathBuf, OperationError> {
+pub async fn get_cache_dir() -> Result<path::PathBuf, OperationError> {
     debug!("Getting cache directory...");
 
     let project_dirs = match get_project_dirs().await {
@@ -45,5 +46,14 @@ async fn get_cache_dir() -> Result<path::PathBuf, OperationError> {
         }
     };
 
-    Ok(project_dirs.cache_dir().to_path_buf())
+    let cache_dir = project_dirs.cache_dir().to_path_buf();
+
+    debug!("Creating cache directory...");
+    match fs::create_dir_all(cache_dir.clone()).await {
+        Ok(_) => Ok(cache_dir),
+        Err(e) => Err(OperationError::new(
+            CommonExitCodes::TokioFsError as i32,
+            &format!("An error occurred while creating cache directory. {}", e),
+        )),
+    }
 }

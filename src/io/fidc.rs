@@ -16,7 +16,9 @@
 
 use sqlx::SqlitePool;
 
-use crate::operations::OperationError;
+use crate::{operations::OperationError, path::appdata::get_cache_dir};
+
+const FILE_ID_CACHE_SQLITE_DB_NAME: &str = "fileidcache.sqlite";
 
 /// Types of connections for file ID caching.
 enum DbConnection {
@@ -34,4 +36,32 @@ trait FileCache {
     async fn upsert_id(&self, hash: String, fileid: String) -> Result<(), OperationError>;
     /// Gets the file id for the hash.
     async fn get_id(&self, hash: String) -> Option<String>;
+}
+
+#[async_trait]
+impl FileCache for DbConnection {
+    async fn get_url(&self) -> Result<String, OperationError> {
+        match self {
+            DbConnection::Sqlite(_) => {
+                debug!("Getting URL for Sqlite connection...");
+                let db_path = match get_cache_dir().await {
+                    Ok(p) => p.join(FILE_ID_CACHE_SQLITE_DB_NAME),
+                    Err(e) => return Err(e),
+                };
+                Ok(format!("sqlite://{path}", path = db_path.to_string_lossy()))
+            }
+        }
+    }
+
+    async fn initialize(&self) -> Result<(), OperationError> {
+        todo!()
+    }
+
+    async fn upsert_id(&self, hash: String, fileid: String) -> Result<(), OperationError> {
+        todo!()
+    }
+
+    async fn get_id(&self, hash: String) -> Option<String> {
+        todo!()
+    }
 }

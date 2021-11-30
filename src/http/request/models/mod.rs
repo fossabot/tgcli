@@ -77,7 +77,7 @@ async fn generate_form_part_from_file(location: path::PathBuf) -> Result<Part, O
         Ok(f) => f,
         Err(e) => {
             return Err(OperationError::new(
-                CommonExitCodes::TokioFsFileError as i32,
+                CommonExitCodes::TokioFsError as i32,
                 &format!(
                     "An error occurred while trying to read the input file. {}",
                     e

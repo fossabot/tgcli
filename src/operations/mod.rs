@@ -104,7 +104,7 @@ pub enum CommonExitCodes {
     // Tokio Errors //
     // //////////// //
     // between 120-139
-    TokioFsFileError = 120,
+    TokioFsError = 120,
 
     // ////////////////// //
     // Directories Errors //
