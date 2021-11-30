@@ -33,6 +33,10 @@ features = ["derive"]
 version = "1.14.0"
 features = ["full"]
 
+[dependencies.sqlx]
+version = "0.5.9"
+features = ["runtime-tokio-rustls", "sqlite"]
+
 [dev-dependencies]
 assert_cmd = "2.0.2"
 dotenv = "0.15.0"

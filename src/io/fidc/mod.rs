@@ -13,3 +13,10 @@
 // limitations under the License.
 
 //! A module for file ID caching.
+
+use sqlx::SqliteConnection;
+
+/// Types of connections for file ID caching.
+enum DbConnection {
+    Sqlite(SqliteConnection),
+}
