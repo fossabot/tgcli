@@ -31,4 +31,4 @@ jobs:
           TELEGRAM_RECEIVER: ${{ secrets.SECRET_TELEGRAM_RECEIVER }}
           TELEGRAM_RECEIVER_ABSENT: ${{ secrets.SECRET_TELEGRAM_RECEIVER_ABSENT }}
         with:
-          command: udeps
+          command: "+nightly udeps"
