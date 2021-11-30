@@ -13,12 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        name: "Repository Checkout"
       - uses: actions-rs/toolchain@v1
+        name: "Rust Toolchain Setup"
         with:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
       - uses: actions/cache@v2
+        name: "Cache Setup"
         with:
           path: |
             ~/.cargo/registry
@@ -26,10 +29,11 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - uses: actions-rs/cargo@v1
+        name: "Test for MacOS"
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.SECRET_TELEGRAM_BOT_TOKEN }}
           TELEGRAM_RECEIVER: ${{ secrets.SECRET_TELEGRAM_RECEIVER }}
           TELEGRAM_RECEIVER_ABSENT: ${{ secrets.SECRET_TELEGRAM_RECEIVER_ABSENT }}
         with:
           command: test
-          args: --workspace -- --nocapture
+          args: --workspace

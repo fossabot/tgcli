@@ -13,12 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        name: "Repository Checkout"
       - uses: actions-rs/toolchain@v1
+        name: "Rust Toolchain Setup"
         with:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
       - uses: actions/cache@v2
+        name: "Cache Setup"
         with:
           path: |
             ~/.cargo/registry
@@ -26,6 +29,7 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - uses: actions-rs/cargo@v1
+        name: "Build for MacOS"
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.SECRET_TELEGRAM_BOT_TOKEN }}
           TELEGRAM_RECEIVER: ${{ secrets.SECRET_TELEGRAM_RECEIVER }}
@@ -33,8 +37,8 @@ jobs:
         with:
           command: build
           args: --release
-      - name: 'Upload Build'
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
+        name: "Artifact Upload"
         with:
           name: tgcli_macos_x64
           path: target/release/tgcli
