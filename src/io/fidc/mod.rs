@@ -16,7 +16,20 @@
 
 use sqlx::SqliteConnection;
 
+use crate::operations::OperationError;
+
 /// Types of connections for file ID caching.
 enum DbConnection {
     Sqlite(SqliteConnection),
+}
+
+#[async_trait]
+/// A trait for file id-hash caching.
+trait FileCache {
+    /// Initializes the database. It must be used before everything else.
+    async fn initialize(&self) -> Result<(), OperationError>;
+    /// Creates or updates current hash and file id.
+    async fn upsert_id(&self, hash: String, fileid: String) -> Result<(), OperationError>;
+    /// Gets the file id for the hash.
+    async fn get_id(&self, hash: String) -> Option<String>;
 }
